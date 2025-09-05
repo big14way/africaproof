@@ -164,10 +164,10 @@ contract ProductionAfricanProof is Ownable, ReentrancyGuard, Pausable {
      * @param additionalData Additional verification data
      */
     function verifyUser(
-        address user, 
+        address user,
         string memory country,
         string memory additionalData
-    ) external onlyAuthorizedVerifier validCountry(country) whenNotPaused {
+    ) external virtual onlyAuthorizedVerifier validCountry(country) whenNotPaused {
         require(!userProfiles[user].isVerified, "User already verified");
         
         // Create user profile

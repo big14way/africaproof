@@ -1,0 +1,103 @@
+{
+  "network": "localhost",
+  "chainId": "31337",
+  "deployedAt": "2025-09-05T14:54:30.087Z",
+  "deployer": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+  "deployerBalance": "9999.984812736488696392",
+  "architecture": "modular",
+  "contracts": {
+    "ProductionAfricanProof": {
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "purpose": "Core identity verification and payments",
+      "features": [
+        "User verification for African countries",
+        "ENS text records integration",
+        "Community attestations",
+        "Micro-payments (sub-cent on Base)",
+        "Cross-border remittances",
+        "Verifiable credentials"
+      ]
+    },
+    "AfricanProofWithDurin": {
+      "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      "purpose": "L2 ENS subdomain management",
+      "registryAddress": "0xe815db6ab1a0c7dc201cbd1dd9ea9498ffd634cc",
+      "features": [
+        "Hierarchical ENS identity (kwame.ghana.gwill.eth)",
+        "L2 subdomain minting via Durin",
+        "Country-specific registries",
+        "Subdomain availability checking",
+        "Text record management"
+      ]
+    },
+    "AfricanProofWithSIWE": {
+      "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      "purpose": "Sign-In With Ethereum authentication",
+      "features": [
+        "EIP-4361 compliant SIWE",
+        "Session management",
+        "Nonce generation and validation",
+        "Domain authorization",
+        "Enhanced security"
+      ]
+    }
+  },
+  "configuration": {
+    "verificationHub": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "registryAddress": "0xe815db6ab1a0c7dc201cbd1dd9ea9498ffd634cc",
+    "supportedCountries": [
+      "GHA",
+      "NGA",
+      "KEN",
+      "ZAF",
+      "EGY"
+    ],
+    "authorizedDomains": [
+      "africanproof.app",
+      "www.africanproof.app",
+      "localhost:3000",
+      "127.0.0.1:3000"
+    ],
+    "ensName": "gwill.eth",
+    "minPayment": "0.000001 ETH",
+    "platformFee": "0.25%"
+  },
+  "ethAccraHackathon": {
+    "ensTrack": {
+      "qualified": true,
+      "tier1": "Durin L2 Subdomains + SIWE Authentication",
+      "tier2": "Professional Networking (can be added via separate EFP contract)",
+      "features": [
+        "Hierarchical ENS identity system",
+        "L2 subdomain minting",
+        "Standard SIWE authentication",
+        "Rich text records for credentials",
+        "Cross-border identity verification"
+      ]
+    },
+    "baseTrack": {
+      "qualified": true,
+      "features": [
+        "African financial inclusion",
+        "Sub-cent payments on Base",
+        "Cross-border remittances",
+        "Community-driven verification",
+        "Real-world problem solving"
+      ]
+    }
+  },
+  "usage": {
+    "frontend": {
+      "core": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "subdomains": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      "auth": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
+    },
+    "demo": [
+      "1. User signs in with SIWE using AfricanProofWithSIWE",
+      "2. Verify identity using ProductionAfricanProof",
+      "3. Mint subdomain using AfricanProofWithDurin",
+      "4. Send payments using ProductionAfricanProof",
+      "5. Build reputation through attestations"
+    ]
+  }
+}
