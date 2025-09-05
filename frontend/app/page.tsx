@@ -31,7 +31,7 @@ export default function HomePage() {
           {/* Main Title */}
           <h1 className="text-4xl lg:text-6xl font-bold text-foreground mb-6 text-balance">
             Verified Digital Identity for{" "}
-            <span className="text-teal-400">Africa</span>
+            <span className="text-cyan-400">Africa</span>
           </h1>
 
           {/* Subheadline */}
@@ -73,10 +73,10 @@ export default function HomePage() {
             The Challenge
           </h2>
           <p className="text-lg text-muted-foreground mb-6 text-pretty leading-relaxed">
-            Millions in Africa face challenges with fraud, duplicate
-            identities, and financial exclusion. Aid funds often don't reach
-            those who need them, remittances are costly and insecure, and
-            communities struggle with fair governance.
+            Millions in Africa face challenges with fraud, duplicate identities,
+            and financial exclusion. Aid funds often don't reach those who need
+            them, remittances are costly and insecure, and communities struggle
+            with fair governance.
           </p>
           <p className="text-lg text-foreground font-medium">
             Our solution combines Self-Sovereign Identity with ENS domains to
@@ -91,19 +91,19 @@ export default function HomePage() {
       <section id="why" className="relative z-10 py-16 lg:py-24 px-6 lg:px-12">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-8 text-center">
-            Why LATAM Needs This
+            Why Africa Needs This
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-6">
               <div className="flex items-start space-x-3">
-                <Shield className="h-6 w-6 text-teal-400 mt-1 flex-shrink-0" />
+                <Shield className="h-6 w-6 text-cyan-400 mt-1 flex-shrink-0" />
                 <p className="text-muted-foreground">
-                  Latin America struggles with fraud, duplicate identities, and
+                  Africa struggles with fraud, duplicate identities, and
                   financial exclusion.
                 </p>
               </div>
               <div className="flex items-start space-x-3">
-                <Users className="h-6 w-6 text-teal-400 mt-1 flex-shrink-0" />
+                <Users className="h-6 w-6 text-cyan-400 mt-1 flex-shrink-0" />
                 <p className="text-muted-foreground">
                   Aid and disaster relief often fail to reach the right people.
                 </p>
@@ -111,13 +111,13 @@ export default function HomePage() {
             </div>
             <div className="space-y-6">
               <div className="flex items-start space-x-3">
-                <CheckCircle className="h-6 w-6 text-teal-400 mt-1 flex-shrink-0" />
+                <CheckCircle className="h-6 w-6 text-cyan-400 mt-1 flex-shrink-0" />
                 <p className="text-muted-foreground">
                   Communities face sybil attacks in governance and funding.
                 </p>
               </div>
               <div className="flex items-start space-x-3">
-                <Zap className="h-6 w-6 text-teal-400 mt-1 flex-shrink-0" />
+                <Zap className="h-6 w-6 text-cyan-400 mt-1 flex-shrink-0" />
                 <p className="text-muted-foreground">
                   Millions remain unbanked, lacking formal credit histories.
                 </p>
@@ -142,8 +142,8 @@ export default function HomePage() {
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-teal-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-black">1</span>
+              <div className="w-16 h-16 bg-cyan-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-navy-900">1</span>
               </div>
               <h3 className="text-xl font-semibold text-foreground mb-3">
                 Verify ID
@@ -153,19 +153,19 @@ export default function HomePage() {
               </p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-teal-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-black">2</span>
+              <div className="w-16 h-16 bg-cyan-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-navy-900">2</span>
               </div>
               <h3 className="text-xl font-semibold text-foreground mb-3">
                 Mint ENS Domain
               </h3>
               <p className="text-muted-foreground">
-                They receive a country-linked ENS name (e.g., ana.mexico.eth).
+                They receive a country-linked ENS name (e.g., ana.ghana.eth).
               </p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-teal-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-black">3</span>
+              <div className="w-16 h-16 bg-cyan-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-navy-900">3</span>
               </div>
               <h3 className="text-xl font-semibold text-foreground mb-3">
                 Use Anywhere
@@ -229,24 +229,24 @@ export default function HomePage() {
       <footer className="relative z-10 border-t border-border bg-card/50 backdrop-blur-sm">
         <div className="flex flex-col md:flex-row items-center justify-between p-6 lg:px-12">
           <div className="text-sm text-muted-foreground mb-4 md:mb-0">
-            © 2025 LatAm Proof. All rights reserved.
+            © 2025 Afroproof. All rights reserved.
           </div>
           <div className="flex items-center space-x-6 text-sm">
             <a
               href="#privacy"
-              className="text-muted-foreground hover:text-sky-400 transition-colors"
+              className="text-muted-foreground hover:text-cyan-400 transition-colors"
             >
               Privacy Policy
             </a>
             <a
               href="#terms"
-              className="text-muted-foreground hover:text-sky-400 transition-colors"
+              className="text-muted-foreground hover:text-cyan-400 transition-colors"
             >
               Terms of Service
             </a>
             <a
               href="#contact"
-              className="text-muted-foreground hover:text-sky-400 transition-colors"
+              className="text-muted-foreground hover:text-cyan-400 transition-colors"
             >
               Contact
             </a>
