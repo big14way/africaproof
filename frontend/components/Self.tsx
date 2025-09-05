@@ -35,7 +35,7 @@ export default function Self({
     try {
       const app = new SelfAppBuilder({
         version: 2,
-        appName: "LatAm Proof",
+        appName: "African Proof",
         scope: "hello",
         endpoint: SelfRegistrar,
         logoBase64: "https://i.postimg.cc/mrmVf9hm/self.png", // url of a png image, base64 is accepted but not recommended

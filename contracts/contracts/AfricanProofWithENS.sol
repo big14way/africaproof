@@ -1,31 +1,37 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
 
-import {SelfVerificationRoot} from "@selfxyz/contracts/contracts/abstract/SelfVerificationRoot.sol";
-import {ISelfVerificationRoot} from "@selfxyz/contracts/contracts/interfaces/ISelfVerificationRoot.sol";
-import {SelfStructs} from "@selfxyz/contracts/contracts/libraries/SelfStructs.sol";
-import {StringUtils} from "@ensdomains/ens-contracts/contracts/utils/StringUtils.sol";
+import {MockSelfVerificationRoot} from "../contracts/mocks/MockSelfVerificationRoot.sol";
+import {MockStringUtils} from "../contracts/mocks/MockStringUtils.sol";
+import {MockSelfStructs} from "../contracts/mocks/MockSelfVerificationRoot.sol";
 
-import {IL2Registry} from "./interfaces/IL2Registry.sol";
+// import {IL2Registry} from "./interfaces/IL2Registry.sol"; // Commented out for now
 /**
- * @title TestSelfVerificationRoot
- * @notice Test implementation of SelfVerificationRoot for testing purposes
- * @dev This contract provides a concrete implementation of the abstract SelfVerificationRoot
+ * @title AfricanProof
+ * @notice Implementation of SelfVerificationRoot for African identity verification
+ * @dev This contract provides a concrete implementation of the abstract SelfVerificationRoot for African countries
  */
-contract LatAmProof is SelfVerificationRoot {
-     using StringUtils for string;
+contract AfricanProof is MockSelfVerificationRoot {
+     using MockStringUtils for string;
 
 
     bool public verificationSuccessful;
-    ISelfVerificationRoot.GenericDiscloseOutputV2 public lastOutput;
+    MockSelfVerificationRoot.GenericDiscloseOutputV2 public lastOutput;
     string  public lastUserData;
-    SelfStructs.VerificationConfigV2 public verificationConfig;
+    MockSelfStructs.VerificationConfigV2 public verificationConfig;
     bytes32 public verificationConfigId;
     address public lastUserAddress;
        
 
     // Doing this because Reverse Lookup isnt achieved in the L2 registry.
-     mapping(address => mapping(string => bool)) public userCountryVerification;
+    mapping(address => mapping(string => bool)) public userCountryVerification;
+
+    /**
+     * @notice Check if user is verified for specific country
+     */
+    function isUserVerifiedForCountry(address user, string memory country) external view returns (bool) {
+        return userCountryVerification[user][country];
+    }
 
 
   /// @notice Maps nullifiers to user identifiers for registration tracking
@@ -45,7 +51,7 @@ contract LatAmProof is SelfVerificationRoot {
 
     // Events for testing
     event VerificationCompleted(
-        ISelfVerificationRoot.GenericDiscloseOutputV2 output,
+        MockSelfVerificationRoot.GenericDiscloseOutputV2 output,
         string userData,
         string country,
         uint256 coinType
@@ -59,7 +65,7 @@ contract LatAmProof is SelfVerificationRoot {
         address identityVerificationHubV2Address,
         uint256 scope,
         bytes32 _verificationConfigId
-    ) SelfVerificationRoot(identityVerificationHubV2Address, scope) {
+    ) MockSelfVerificationRoot(identityVerificationHubV2Address, scope) {
         verificationConfigId = _verificationConfigId;
          assembly {
             sstore(chainId.slot, chainid())
@@ -76,7 +82,7 @@ contract LatAmProof is SelfVerificationRoot {
      * @param userData The user data passed through verification
      */
     function customVerificationHook(
-        ISelfVerificationRoot.GenericDiscloseOutputV2 memory output,
+        MockSelfVerificationRoot.GenericDiscloseOutputV2 memory output,
         bytes memory userData
     ) internal override {
              // Commented this for DEMO -> In Production this will be enabled
@@ -97,20 +103,22 @@ contract LatAmProof is SelfVerificationRoot {
 
       
 
-                // Check if registry exists for this country
+        // ENS Registry functionality (commented out for now - can be enabled later)
+        /*
+        // Check if registry exists for this country
         address registryAddr = registryAddress[country];
         require(registryAddr != address(0), "No registry set for this country");
         IL2Registry registry = IL2Registry(registryAddr);
         bytes32 node = _labelToNode(lastUserData, registryAddr);
-      // Set the forward address for the current chain. This is needed for reverse resolution.
+        // Set the forward address for the current chain. This is needed for reverse resolution.
         // E.g. if this contract is deployed to Base, set an address for chainId 8453 which is
         // coinType 2147492101 according to ENSIP-11.
-     registry.setAddr(node, coinType, addr);
+        registry.setAddr(node, coinType, addr);
 
         // Set the forward address for mainnet ETH (coinType 60) for easier debugging.
         registry.setAddr(node, 60, addr);
 
-        
+
         // Register the name in the L2 registry
         registry.createSubnode(
             registry.baseNode(),
@@ -118,6 +126,7 @@ contract LatAmProof is SelfVerificationRoot {
             lastUserAddress,
             new bytes[](0)
         );
+        */
 
        
 
@@ -131,7 +140,7 @@ contract LatAmProof is SelfVerificationRoot {
      */
     function resetTestState() external {
         verificationSuccessful = false;
-        lastOutput = ISelfVerificationRoot.GenericDiscloseOutputV2({
+        lastOutput = MockSelfVerificationRoot.GenericDiscloseOutputV2({
             attestationId: bytes32(0),
             userIdentifier: 0,
             nullifier: 0,
@@ -142,7 +151,7 @@ contract LatAmProof is SelfVerificationRoot {
                 uint256(0)
             ],
             issuingState: "",
-            name: new string[](3),
+            name: [string(""), string(""), string("")],
             idNumber: "",
             nationality: "",
             dateOfBirth: "",
@@ -164,14 +173,14 @@ contract LatAmProof is SelfVerificationRoot {
     }
 
     function setVerificationConfig(
-        SelfStructs.VerificationConfigV2 memory config
+        MockSelfStructs.VerificationConfigV2 memory config
     ) external {
         verificationConfig = config;
-        _identityVerificationHubV2.setVerificationConfigV2(verificationConfig);
+        // Note: Mock implementation - in production this would call the hub
     }
 
     function setVerificationConfigNoHub(
-        SelfStructs.VerificationConfigV2 memory config
+        MockSelfStructs.VerificationConfigV2 memory config
     ) external {
         verificationConfig = config;
     }
@@ -188,21 +197,11 @@ contract LatAmProof is SelfVerificationRoot {
         return verificationConfigId;
     }
 
-    /**
-     * @notice Test function to simulate calling onVerificationSuccess from hub
-     * @dev This function is only for testing purposes to verify access control
-     * @param output The verification output
-     * @param userData The user data
-     */
-    function testOnVerificationSuccess(
-        bytes memory output,
-        bytes memory userData
-    ) external {
-        // This should fail if called by anyone other than the hub
-        onVerificationSuccess(output, userData);
-    }
 
 
+
+    // ENS-related functions (commented out for now - can be enabled later)
+    /*
     /// @notice Checks if a given label is available for registration
     /// @dev Uses try-catch to handle the ERC721NonexistentToken error
     /// @param label The label to check availability for
@@ -228,6 +227,7 @@ contract LatAmProof is SelfVerificationRoot {
         IL2Registry _registry = IL2Registry(_registryAddress);
         return _registry.makeNode(_registry.baseNode(), label);
     }
+    */
 
   function _setRegistry(string memory country, address _registryAddress) external {
     require(_registryAddress != address(0), "Invalid registry address"); 
@@ -237,11 +237,5 @@ contract LatAmProof is SelfVerificationRoot {
 
 
 
-    /// @notice Simple check: is user verified for a specific country?
-    /// @param user The address to check
-    /// @param country The country code (e.g., "ARG", "BLZ")
-    /// @return True if user is verified for this country, false otherwise
-    function isUserVerifiedForCountry(address user, string memory country) external view returns (bool) {
-        return userCountryVerification[user][country];
-    }
+
 }

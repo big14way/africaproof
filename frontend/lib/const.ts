@@ -1,9 +1,79 @@
-export const registry = {
-  ARG: "0xb40eb0c9edd1ccf5305dccf7da92291f8059d947",
-  BRA: "0xc3a4eb979e9035486b54fe8b57d36aef9519eac6",
-  CHL: "0x7b923b2948f41993c194ec8f761fb2ee294a55fa",
-  MEX: "0xf9d7abb40ff5943b0bb53d584e72dafc7a5c79db",
+// AfricanProof Contract Addresses (Update after deployment)
+export const AFRICAN_PROOF_CONTRACTS = {
+  // Base Mainnet
+  base: {
+    ProductionAfricanProof: "0x0000000000000000000000000000000000000000", // Update after deployment
+    SimpleAfricanProof: "0x0000000000000000000000000000000000000000", // Update after deployment
+  },
+  // Base Sepolia (Testnet)
+  baseSepolia: {
+    ProductionAfricanProof: "0x0000000000000000000000000000000000000000", // Update after deployment
+    SimpleAfricanProof: "0x0000000000000000000000000000000000000000", // Update after deployment
+  },
+  // Local development
+  localhost: {
+    ProductionAfricanProof: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    SimpleAfricanProof: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+  }
 };
+
+// Legacy registry for backward compatibility
+// AfricanProof Contract Addresses (Update after deployment)
+export const AFRICAN_PROOF_CONTRACTS = {
+  // Base Mainnet
+  base: {
+    ProductionAfricanProof: "0x0000000000000000000000000000000000000000", // Update after deployment
+    SimpleAfricanProof: "0x0000000000000000000000000000000000000000", // Update after deployment
+  },
+  // Base Sepolia (Testnet)
+  baseSepolia: {
+    ProductionAfricanProof: "0x0000000000000000000000000000000000000000", // Update after deployment
+    SimpleAfricanProof: "0x0000000000000000000000000000000000000000", // Update after deployment
+  },
+  // Local development
+  localhost: {
+    ProductionAfricanProof: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    SimpleAfricanProof: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+  }
+};
+
+// Legacy registry for backward compatibility
+export const registry = {
+  GHA: "0xb40eb0c9edd1ccf5305dccf7da92291f8059d947",
+  NGA: "0xc3a4eb979e9035486b54fe8b57d36aef9519eac6",
+  KEN: "0x7b923b2948f41993c194ec8f761fb2ee294a55fa",
+  ZAF: "0xf9d7abb40ff5943b0bb53d584e72dafc7a5c79db",
+};
+
+// African countries configuration
+export const AFRICAN_COUNTRIES = {
+  GHA: { name: "Ghana", flag: "🇬🇭", code: "GHA" },
+  NGA: { name: "Nigeria", flag: "🇳🇬", code: "NGA" },
+  KEN: { name: "Kenya", flag: "🇰🇪", code: "KEN" },
+  ZAF: { name: "South Africa", flag: "🇿🇦", code: "ZAF" },
+  EGY: { name: "Egypt", flag: "🇪🇬", code: "EGY" },
+  MAR: { name: "Morocco", flag: "🇲🇦", code: "MAR" },
+  TUN: { name: "Tunisia", flag: "🇹🇳", code: "TUN" },
+  ETH: { name: "Ethiopia", flag: "🇪🇹", code: "ETH" },
+};
+
+// Base ENS name
+export const BASE_ENS_NAME = "godswillgwill.base.eth";
+
+// African countries configuration
+export const AFRICAN_COUNTRIES = {
+  GHA: { name: "Ghana", flag: "🇬🇭", code: "GHA" },
+  NGA: { name: "Nigeria", flag: "🇳🇬", code: "NGA" },
+  KEN: { name: "Kenya", flag: "🇰🇪", code: "KEN" },
+  ZAF: { name: "South Africa", flag: "🇿🇦", code: "ZAF" },
+  EGY: { name: "Egypt", flag: "🇪🇬", code: "EGY" },
+  MAR: { name: "Morocco", flag: "🇲🇦", code: "MAR" },
+  TUN: { name: "Tunisia", flag: "🇹🇳", code: "TUN" },
+  ETH: { name: "Ethiopia", flag: "🇪🇹", code: "ETH" },
+};
+
+// Base ENS name
+export const BASE_ENS_NAME = "godswillgwill.base.eth";
 
 export const available = [
   {

@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
 
-import {ILatAmProof} from "../interfaces/ILatamProof.sol";
+import {IAfricanProof} from "../interfaces/IAfricanProof.sol";
 
-contract LatAmGovernance {
-    ILatAmProof public latAmProof;
+contract AfricanGovernance {
+    IAfricanProof public africanProof;
     
     struct Proposal {
         string title;
@@ -21,16 +21,16 @@ contract LatAmGovernance {
     event ProposalCreated(uint256 proposalId, string title);
     event VoteCast(address voter, uint256 proposalId, bool support);
     
-    modifier onlyArgentinian() {
+    modifier onlyGhanaian() {
         require(
-            latAmProof.isUserVerifiedForCountry(msg.sender, "ARG"),
-            "Only Argentinian users can vote"
+            africanProof.isUserVerifiedForCountry(msg.sender, "GHA"),
+            "Only Ghanaian users can vote"
         );
         _;
     }
-    
-    constructor(address _latAmProof) {
-        latAmProof = ILatAmProof(_latAmProof);
+
+    constructor(address _africanProof) {
+        africanProof = IAfricanProof(_africanProof);
     }
     
     function createProposal(string memory title) external {
@@ -45,7 +45,7 @@ contract LatAmGovernance {
         emit ProposalCreated(proposalCount, title);
     }
     
-    function vote(uint256 proposalId, bool support) external onlyArgentinian {
+    function vote(uint256 proposalId, bool support) external onlyGhanaian {
         require(proposals[proposalId].active, "Proposal not active");
         require(!hasVoted[proposalId][msg.sender], "Already voted");
         

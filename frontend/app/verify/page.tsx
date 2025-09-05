@@ -57,20 +57,20 @@ export default function VerifyPage() {
   };
 
   const countryCodeMap: { [key: string]: string } = {
-    ARG: "arg",
-    BRA: "brazil",
-    CHL: "chile",
-    MEX: "mexico",
+    GHA: "ghana",
+    NGA: "nigeria",
+    KEN: "kenya",
+    ZAF: "southafrica",
   };
 
   const handleSuccess = () => {
     setTimeout(() => {
       // Country code mapping
       const countryCodeMap: { [key: string]: string } = {
-        ARG: "arg",
-        BRA: "brazil",
-        CHL: "chile",
-        MEX: "mexico",
+        GHA: "ghana",
+        NGA: "nigeria",
+        KEN: "kenya",
+        ZAF: "southafrica",
       };
 
       const countryCode =
@@ -253,10 +253,10 @@ export default function VerifyPage() {
                   <SelectValue placeholder="Choose your country" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="MEX">🇲🇽 Mexico</SelectItem>
-                  <SelectItem value="ARG">🇦🇷 Argentina</SelectItem>
-                  <SelectItem value="BRA">🇧🇷 Brazil</SelectItem>
-                  <SelectItem value="CHL">🇨🇱 Chile</SelectItem>
+                  <SelectItem value="GHA">🇬🇭 Ghana</SelectItem>
+                  <SelectItem value="NGA">🇳🇬 Nigeria</SelectItem>
+                  <SelectItem value="KEN">🇰🇪 Kenya</SelectItem>
+                  <SelectItem value="ZAF">🇿🇦 South Africa</SelectItem>
                 </SelectContent>
               </Select>
             </div>

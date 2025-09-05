@@ -1,7 +1,6 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
-import "@nomicfoundation/hardhat-ignition-ethers";
-require("dotenv").config();
+
 const config: HardhatUserConfig = {
   solidity: {
     version: "0.8.28",
@@ -9,14 +8,7 @@ const config: HardhatUserConfig = {
       optimizer: {
         enabled: true,
         runs: 200,
-        details: {
-          yul: true,
-        },
       },
-      metadata: {
-        bytecodeHash: "none",
-      },
-      viaIR: false,
     },
   },
   paths: {
@@ -32,7 +24,17 @@ const config: HardhatUserConfig = {
       url:
         process.env.CELO_ALFAJORES_RPC_URL ||
         "https://alfajores-forno.celo-testnet.org",
-      accounts: [process.env.CELO_ALFAJORES_KEY as string],
+      accounts: process.env.CELO_ALFAJORES_KEY ? [process.env.CELO_ALFAJORES_KEY] : [],
+    },
+    base: {
+      chainId: 8453,
+      url: process.env.BASE_RPC_URL || "https://mainnet.base.org",
+      accounts: process.env.BASE_PRIVATE_KEY ? [process.env.BASE_PRIVATE_KEY] : [],
+    },
+    baseSepolia: {
+      chainId: 84532,
+      url: process.env.BASE_SEPOLIA_RPC_URL || "https://sepolia.base.org",
+      accounts: process.env.BASE_SEPOLIA_PRIVATE_KEY ? [process.env.BASE_SEPOLIA_PRIVATE_KEY] : [],
     },
   },
   etherscan: {

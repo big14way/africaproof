@@ -2,31 +2,31 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
 
-import {ILatAmProof} from "../interfaces/ILatamProof.sol";
+import {IAfricanProof} from "../interfaces/IAfricanProof.sol";
 contract MyGatedContract {
-    ILatAmProof public latAmProof;
-    uint256 public argCount;
-    
-    constructor(address _latAmProof) {
-        latAmProof = ILatAmProof(_latAmProof);
-        argCount=0;
+    IAfricanProof public africanProof;
+    uint256 public ghaCount;
+
+    constructor(address _africanProof) {
+        africanProof = IAfricanProof(_africanProof);
+        ghaCount=0;
     }
 
-    
+
     modifier onlyFromCountry(string memory country) {
         require(
-            latAmProof.isUserVerifiedForCountry(msg.sender, country),
+            africanProof.isUserVerifiedForCountry(msg.sender, country),
             "Not verified for this country"
         );
         _;
     }
-    
-    function argentinaOnly() external onlyFromCountry("ARG") {
-        // Only Argentinian users can call this
-        argCount++;
+
+    function ghanaOnly() external onlyFromCountry("GHA") {
+        // Only Ghanaian users can call this
+        ghaCount++;
     }
-    
-    function belizeOnly() external onlyFromCountry("BLZ") {
-        // Only Belize users can call this
+
+    function nigeriaOnly() external onlyFromCountry("NGA") {
+        // Only Nigerian users can call this
     }
 }

@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
 
-import {ILatAmProof} from "../interfaces/ILatamProof.sol";
+import {IAfricanProof} from "../interfaces/IAfricanProof.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract DisasterRelief {
-    ILatAmProof public latAmProof;
+    IAfricanProof public africanProof;
     IERC20 public reliefToken;
     
     struct ReliefProgram {
@@ -37,19 +37,19 @@ contract DisasterRelief {
     event ReliefFunded(address indexed funder, uint256 amount, uint256 indexed programId);
     event ProgramStatusChanged(uint256 indexed programId, bool active);
     
-    modifier onlyMexican() {
+    modifier onlyGhanaian() {
         require(
-            latAmProof.isUserVerifiedForCountry(msg.sender, "ARG"),
-            "Only Argentinian users can claim disaster relief"
+            africanProof.isUserVerifiedForCountry(msg.sender, "GHA"),
+            "Only Ghanaian users can claim disaster relief"
         );
         _;
     }
-    
-    constructor(address _latAmProof, address _reliefToken) {
-        latAmProof = ILatAmProof(_latAmProof);
+
+    constructor(address _africanProof, address _reliefToken) {
+        africanProof = IAfricanProof(_africanProof);
         reliefToken = IERC20(_reliefToken);
         // Create default program
-        _createProgram("Argentina Disaster Relief", 1000 * 10**18, 1000); // 1000 tokens
+        _createProgram("Ghana Disaster Relief", 1000 * 10**18, 1000); // 1000 tokens
     }
     
     function createProgram(
@@ -83,7 +83,7 @@ contract DisasterRelief {
         return programId;
     }
     
-    function claimRelief(uint256 programId) external onlyMexican {
+    function claimRelief(uint256 programId) external onlyGhanaian {
         ReliefProgram storage program = programs[programId];
         require(program.active, "Program not active");
         require(block.timestamp >= program.startDate, "Program not started");
@@ -179,7 +179,7 @@ contract DisasterRelief {
     }
 
     function checkEligibility(address user) external view returns (bool) {
-        return latAmProof.isUserVerifiedForCountry(user, "ARG");
+        return africanProof.isUserVerifiedForCountry(user, "GHA");
     }
 
 }

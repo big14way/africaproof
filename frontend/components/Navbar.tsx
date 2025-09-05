@@ -8,13 +8,13 @@ export const Navbar = () => {
         <div className="flex items-center space-x-2">
           <Image
             src="/LatAmLogo.png"
-            alt="LatAm Proof Logo"
+            alt="African Proof Logo"
             width={32}
             height={32}
             className="drop-shadow-lg"
           />
           <span className="text-2xl font-bold text-teal-400 drop-shadow-lg">
-            LatAm Proof
+            African Proof
           </span>
         </div>
       </a>

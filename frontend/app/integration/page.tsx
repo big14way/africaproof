@@ -15,40 +15,40 @@ import { Navbar } from "@/components/Navbar";
 import { SelfRegistrar } from "@/lib/const";
 
 const countries = [
-  { code: "ARG", name: "Argentina", flag: "🇦🇷" },
-  { code: "BRA", name: "Brazil", flag: "🇧🇷" },
-  { code: "CHL", name: "Chile", flag: "🇨🇱" },
-  { code: "MEX", name: "Mexico", flag: "🇲🇽" },
+  { code: "GHA", name: "Ghana", flag: "🇬🇭" },
+  { code: "NGA", name: "Nigeria", flag: "🇳🇬" },
+  { code: "KEN", name: "Kenya", flag: "🇰🇪" },
+  { code: "ZAF", name: "South Africa", flag: "🇿🇦" },
 ];
 
 const generateCodeSnippet = (countryCode: string, countryName: string) => {
   return `// SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
 
-import {ILatAmProof} from "../interfaces/ILatamProof.sol";
+import {IAfricanProof} from "../interfaces/IAfricanProof.sol";
 
 contract MyGatedContract {
-    ILatAmProof public latAmProof;
-    
+    IAfricanProof public africanProof;
+
     constructor() {
-        latAmProof = ILatAmProof("${SelfRegistrar}");
+        africanProof = IAfricanProof("${SelfRegistrar}");
     }
 
     modifier onlyFromCountry{
         require(
-            latAmProof.isUserVerifiedForCountry(msg.sender, ${countryCode}),
+            africanProof.isUserVerifiedForCountry(msg.sender, ${countryCode}),
             "Not verified for this country"
         );
         _;
     }
-    
+
     function ${countryName.toLowerCase()}Only() external onlyFromCountry {
         // Only ${countryName} users can call this
 
     }
-    
+
     function getVerificationStatus(address user) external view returns (bool) {
-        return latAmProof.isUserVerifiedForCountry(user, "${countryCode}");
+        return africanProof.isUserVerifiedForCountry(user, "${countryCode}");
     }
 }`;
 };

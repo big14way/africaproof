@@ -31,12 +31,12 @@ export default function HomePage() {
           {/* Main Title */}
           <h1 className="text-4xl lg:text-6xl font-bold text-foreground mb-6 text-balance">
             Verified Digital Identity for{" "}
-            <span className="text-teal-400">Latin America</span>
+            <span className="text-teal-400">Africa</span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-xl text-muted-foreground mb-8 text-pretty leading-relaxed">
-            Bringing trust, fairness, and financial access to LATAM through
+            Bringing trust, fairness, and financial access to Africa through
             ENS-powered, government-verified identities.
           </p>
 
@@ -73,7 +73,7 @@ export default function HomePage() {
             The Challenge
           </h2>
           <p className="text-lg text-muted-foreground mb-6 text-pretty leading-relaxed">
-            Millions in Latin America face challenges with fraud, duplicate
+            Millions in Africa face challenges with fraud, duplicate
             identities, and financial exclusion. Aid funds often don't reach
             those who need them, remittances are costly and insecure, and
             communities struggle with fair governance.
