@@ -7,7 +7,7 @@
   "contracts": {
     "ProductionAfricanProof": {
       "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-      "ensName": "godswillgwill.base.eth",
+      "ensName": "gwill.eth",
       "features": [
         "User verification for African countries",
         "ENS text records integration",
@@ -38,7 +38,7 @@
       "TUN",
       "ETH"
     ],
-    "ensName": "godswillgwill.base.eth",
+    "ensName": "gwill.eth",
     "minPayment": "0.000001 ETH",
     "platformFee": "0.25%"
   },

@@ -29,7 +29,7 @@ Users go through a government-verified identity check using Self.xyz technology.
 
 ### 2. **ENS Domain Creation** 🌐
 
-Each verified user gets an ENS domain (like `godswillgwill.base.eth`) that serves as their **digital identity wallet**.
+Each verified user gets an ENS domain (like `gwill.eth`) that serves as their **digital identity wallet**.
 
 ### 3. **Proof of Income & Assets** 💰
 
@@ -57,7 +57,7 @@ With AfricanProof:
 **Example**: Amara from rural Ghana has been selling crafts for 5 years but can't get a loan. With AfricanProof:
 
 1. She verifies her identity through government records
-2. Gets `godswillgwill.base.eth` domain
+2. Gets `gwill.eth` domain
 3. Stores her craft business income records in ENS text records
 4. Banks can verify her income without seeing personal details
 5. Gets approved for a business loan
@@ -111,12 +111,12 @@ sequenceDiagram
     AfricanProof->>L2Registry: Set Address Resolution
     AfricanProof-->>Frontend: Verification Complete
 
-    Frontend->>User: Show ENS Domain: godswillgwill.base.eth
+    Frontend->>User: Show ENS Domain: gwill.eth
 
     Note over User,ReliefFund: Using the ENS Domain for Relief Funds
 
     User->>Frontend: Claim Disaster Relief
-    Frontend->>ReliefFund: Claim Relief (godswillgwill.base.eth)
+    Frontend->>ReliefFund: Claim Relief (gwill.eth)
     ReliefFund->>AfricanProof: isUserVerifiedForCountry(user, "GHA")
     AfricanProof-->>ReliefFund: ✅ Verified for Ghana
     ReliefFund->>ReliefFund: Process Relief Claim
@@ -137,7 +137,7 @@ sequenceDiagram
 - **Self.xyz**: Handles government credential verification
 - **AfricanProof**: Receives verification and manages ENS creation
 - **L2 Registry**: Creates the actual ENS domain
-- **Result**: User gets `godswillgwill.base.eth` domain for financial services
+- **Result**: User gets `gwill.eth` domain for financial services
 
 ## 🏦 Relief Fund Verification
 
@@ -208,7 +208,7 @@ npx hardhat run scripts/deployProduction.js --network base
 
 1. **Connect Wallet**: Connect to Base Sepolia network
 2. **Verify Identity**: Submit verification for an African country (GHA, NGA, KEN, ZAF)
-3. **View ENS Integration**: See your `godswillgwill.base.eth` with verification records
+3. **View ENS Integration**: See your `gwill.eth` with verification records
 4. **Test Payments**: Send micro-payments to other verified users
 5. **Cross-Border Transfer**: Send remittances between countries
 6. **Community Attestation**: Give/receive peer attestations
@@ -233,7 +233,7 @@ npx hardhat run scripts/deployProduction.js --network base
 
 #### 🏷️ Advanced ENS Integration
 - **Text Records**: Store verification status, credentials, attestations
-- **Your ENS**: `godswillgwill.base.eth` integrated throughout
+- **Your ENS**: `gwill.eth` integrated throughout
 - **Cross-Border**: ENS names facilitate international transactions
 - **Community**: ENS-based reputation system
 

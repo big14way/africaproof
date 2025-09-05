@@ -44,7 +44,7 @@ describe("SimpleAfricanProof", function () {
       await simpleAfricanProof.verifyUser(user1.address, "GHA");
       
       const domain = await simpleAfricanProof.getUserENSDomain(user1.address);
-      expect(domain).to.equal("godswillgwill.base.eth");
+      expect(domain).to.equal("gwill.eth");
     });
 
     it("Should set verification timestamp", async function () {
@@ -120,8 +120,8 @@ describe("SimpleAfricanProof", function () {
       await simpleAfricanProof.verifyUser(user1.address, "GHA");
       await simpleAfricanProof.verifyUser(user2.address, "NGA");
       
-      expect(await simpleAfricanProof.getUserENSDomain(user1.address)).to.equal("godswillgwill.base.eth");
-      expect(await simpleAfricanProof.getUserENSDomain(user2.address)).to.equal("godswillgwill.base.eth");
+      expect(await simpleAfricanProof.getUserENSDomain(user1.address)).to.equal("gwill.eth");
+      expect(await simpleAfricanProof.getUserENSDomain(user2.address)).to.equal("gwill.eth");
     });
   });
 

@@ -9,7 +9,7 @@ describe("ProductionAfricanProof", function () {
   const NIGERIA = "NGA";
   const KENYA = "KEN";
   const SOUTH_AFRICA = "ZAF";
-  const BASE_ENS_NAME = "godswillgwill.base.eth";
+  const BASE_ENS_NAME = "gwill.eth";
 
   beforeEach(async function () {
     [owner, verificationHub, user1, user2, user3, attacker] = await ethers.getSigners();

@@ -50,7 +50,7 @@ contract SimpleAfricanProof {
         verificationTimestamp[user] = block.timestamp;
         
         // Create ENS domain name
-        string memory domain = string(abi.encodePacked("godswillgwill.base.eth"));
+        string memory domain = string(abi.encodePacked("gwill.eth"));
         userENSDomain[user] = domain;
         
         emit UserVerified(user, country, block.timestamp);

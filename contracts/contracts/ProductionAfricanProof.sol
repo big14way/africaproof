@@ -107,7 +107,7 @@ contract ProductionAfricanProof is Ownable, ReentrancyGuard, Pausable {
     // Configuration
     uint256 public constant MIN_PAYMENT = 1e12; // 0.000001 ETH (sub-cent on Base)
     uint256 public constant PLATFORM_FEE_BP = 25; // 0.25% platform fee
-    string public constant BASE_ENS_NAME = "godswillgwill.base.eth";
+    string public constant BASE_ENS_NAME = "gwill.eth";
     
     // Verification hub (for Self.xyz integration)
     address public verificationHub;

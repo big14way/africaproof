@@ -20,7 +20,7 @@ describe("ProductionAfricanProof - Simple Test", function () {
     });
 
     it("Should have correct ENS name", async function () {
-      expect(await africanProof.BASE_ENS_NAME()).to.equal("godswillgwill.base.eth");
+      expect(await africanProof.BASE_ENS_NAME()).to.equal("gwill.eth");
     });
 
     it("Should support African countries", async function () {
@@ -34,7 +34,7 @@ describe("ProductionAfricanProof - Simple Test", function () {
       await africanProof.connect(verificationHub).verifyUser(user1.address, "GHA", "test-data");
       
       expect(await africanProof.isUserVerifiedForCountry(user1.address, "GHA")).to.equal(true);
-      expect(await africanProof.getUserENSName(user1.address)).to.equal("godswillgwill.base.eth");
+      expect(await africanProof.getUserENSName(user1.address)).to.equal("gwill.eth");
     });
 
     it("Should set text records", async function () {

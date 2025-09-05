@@ -95,7 +95,7 @@ async function main() {
     contracts: {
       ProductionAfricanProof: {
         address: africanProofAddress,
-        ensName: "godswillgwill.base.eth",
+        ensName: "gwill.eth",
         features: [
           "User verification for African countries",
           "ENS text records integration",
@@ -117,7 +117,7 @@ async function main() {
     configuration: {
       hubAddress,
       supportedCountries: ["GHA", "NGA", "KEN", "ZAF", "EGY", "MAR", "TUN", "ETH"],
-      ensName: "godswillgwill.base.eth",
+      ensName: "gwill.eth",
       minPayment: "0.000001 ETH",
       platformFee: "0.25%"
     },
@@ -160,7 +160,7 @@ async function main() {
     network: networkName,
     productionContract: africanProofAddress,
     simpleContract: simpleAfricanProofAddress,
-    ensName: "godswillgwill.base.eth",
+    ensName: "gwill.eth",
     hubAddress,
     deployedAt: deploymentInfo.deployedAt,
     deployer: deployer.address
@@ -176,7 +176,7 @@ async function main() {
   console.log("\n=== 🏆 ETH ACCRA HACKATHON READY ===");
   console.log("✅ ENS Track Qualified - Advanced ENS integration");
   console.log("✅ Base Track Qualified - African financial solutions");
-  console.log("✅ Your ENS: godswillgwill.base.eth integrated");
+  console.log("✅ Your ENS: gwill.eth integrated");
   console.log("✅ African countries: Ghana, Nigeria, Kenya, South Africa");
 
   console.log("\n=== 🚀 NEXT STEPS ===");

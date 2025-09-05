@@ -93,14 +93,14 @@ describe("EnhancedAfricanProofSimplified", function () {
     });
 
     it("Should have correct ENS name", async function () {
-      expect(await enhancedAfricanProof.getUserENSName(user1.address)).to.equal("godswillgwill.base.eth");
+      expect(await enhancedAfricanProof.getUserENSName(user1.address)).to.equal("gwill.eth");
     });
   });
 
   describe("Integration with ProductionAfricanProof", function () {
     it("Should have same core functionality as ProductionAfricanProof", async function () {
       // Test that enhanced version maintains compatibility
-      expect(await enhancedAfricanProof.BASE_ENS_NAME()).to.equal("godswillgwill.base.eth");
+      expect(await enhancedAfricanProof.BASE_ENS_NAME()).to.equal("gwill.eth");
       expect(await enhancedAfricanProof.MIN_PAYMENT()).to.equal(ethers.parseEther("0.000001"));
       expect(await enhancedAfricanProof.PLATFORM_FEE_BP()).to.equal(25);
       

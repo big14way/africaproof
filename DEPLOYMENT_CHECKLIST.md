@@ -14,7 +14,7 @@
 - ✅ **Testing**: 25/25 tests passing (7 + 18)
 
 ### Features Implemented
-- ✅ **ENS Integration**: `godswillgwill.base.eth` integrated
+- ✅ **ENS Integration**: `gwill.eth` integrated
 - ✅ **African Countries**: 8 countries supported (GHA, NGA, KEN, ZAF, EGY, MAR, TUN, ETH)
 - ✅ **Micro-Payments**: Sub-cent payments on Base
 - ✅ **Cross-Border Remittances**: Low-cost international transfers
@@ -29,7 +29,7 @@
 - **Text Records System**: Stores verification status, credentials, attestations
 - **Community Features**: ENS-based reputation and peer attestations
 - **Cross-Border Coordination**: ENS facilitates international transactions
-- **Your ENS**: `godswillgwill.base.eth` is core to the identity system
+- **Your ENS**: `gwill.eth` is core to the identity system
 
 ### 🔵 Base Track - QUALIFIED ✅
 - **Real African Problems**: Addresses financial inclusion and identity verification
@@ -74,7 +74,7 @@ npx hardhat verify --network baseSepolia <SIMPLE_ADDRESS>
 ### Demo Flow
 1. **Connect Wallet** → Base Sepolia network
 2. **Identity Verification** → Submit for Ghana (GHA)
-3. **ENS Integration** → Show `godswillgwill.base.eth` with verification records
+3. **ENS Integration** → Show `gwill.eth` with verification records
 4. **Micro-Payment** → Send 0.001 ETH to another user
 5. **Cross-Border Remittance** → Send from Ghana to Nigeria
 6. **Community Attestation** → Give peer attestation
@@ -85,7 +85,7 @@ npx hardhat verify --network baseSepolia <SIMPLE_ADDRESS>
 "Hi! I'm demonstrating AfricanProof - a Web3 identity system for Africa.
 
 1. First, I'll verify my identity for Ghana using government credentials
-2. Notice how this creates rich ENS text records on godswillgwill.base.eth
+2. Notice how this creates rich ENS text records on gwill.eth
 3. Now I can send micro-payments - this costs just 0.001 ETH on Base
 4. Cross-border remittances work between any African countries
 5. Community members can attest to my reputation
@@ -107,7 +107,7 @@ AfricanProof makes Web3 accessible to everyone in Africa."
 ### Network Configuration
 - **Base Mainnet**: Chain ID 8453
 - **Base Sepolia**: Chain ID 84532
-- **ENS Name**: `godswillgwill.base.eth`
+- **ENS Name**: `gwill.eth`
 - **Min Payment**: 0.000001 ETH
 - **Platform Fee**: 0.25%
 

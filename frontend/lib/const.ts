@@ -58,7 +58,7 @@ export const AFRICAN_COUNTRIES = {
 };
 
 // Base ENS name
-export const BASE_ENS_NAME = "godswillgwill.base.eth";
+export const BASE_ENS_NAME = "gwill.eth";
 
 // African countries configuration
 export const AFRICAN_COUNTRIES = {
@@ -73,7 +73,7 @@ export const AFRICAN_COUNTRIES = {
 };
 
 // Base ENS name
-export const BASE_ENS_NAME = "godswillgwill.base.eth";
+export const BASE_ENS_NAME = "gwill.eth";
 
 export const available = [
   {
