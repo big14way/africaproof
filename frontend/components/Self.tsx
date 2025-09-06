@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
 import { getUniversalLink } from "@selfxyz/core";
 import {
   SelfQRcodeWrapper,
@@ -23,15 +22,23 @@ export default function Self({
   handleSuccess,
   handleError,
 }: SelfProps) {
-  const router = useRouter();
+  const [mounted, setMounted] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [selfApp, setSelfApp] = useState<SelfApp | null>(null);
   const [universalLink, setUniversalLink] = useState("");
 
+  // Handle hydration
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Use useEffect to ensure code only executes on the client side
   useEffect(() => {
+    // Only initialize if we have a userId and haven't already initialized
+    if (!userId || selfApp) return;
+
     try {
       const app = new SelfAppBuilder({
         version: 2,
@@ -54,7 +61,7 @@ export default function Self({
     } catch (error) {
       console.error("Failed to initialize Self app:", error);
     }
-  }, [userId, userDefinedData]);
+  }, [userId, userDefinedData, selfApp]);
 
   const displayToast = (message: string) => {
     setToastMessage(message);
@@ -139,7 +146,9 @@ export default function Self({
                   User Address
                 </span>
                 <div className="bg-gray-900/60 rounded-lg px-4 py-3 w-full text-center break-all text-sm font-mono text-gray-100 border border-gray-500/40 shadow-inner">
-                  {userId ? (
+                  {!mounted ? (
+                    <span className="text-gray-400">Loading...</span>
+                  ) : userId ? (
                     userId
                   ) : (
                     <span className="text-gray-400">Not connected</span>

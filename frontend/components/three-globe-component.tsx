@@ -1,165 +1,194 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import type React from "react";
-
-import * as THREE from "three";
-import ThreeGlobeLib from "three-globe";
 
 export const ThreeGlobeComponent: React.FC = () => {
   const mountRef = useRef<HTMLDivElement>(null);
-  const frameRef = useRef<number | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Safety check to ensure we're in the browser environment
     if (typeof window === "undefined") return;
 
     const mountElement = mountRef.current;
     if (!mountElement) return;
 
-    // Scene setup
-    const scene = new THREE.Scene();
-    scene.background = null;
+    let animationId: number;
+    let scene: any;
+    let camera: any;
+    let renderer: any;
+    let globe: any;
+    let networkPoints: any[] = [];
+    let networkLines: any[] = [];
 
-    // Camera setup
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      mountElement.clientWidth / mountElement.clientHeight,
-      0.1,
-      1000
-    );
-    camera.position.z = 250;
+    const initGlobe = async () => {
+      try {
+        const THREE = await import("three");
+        const ThreeGlobe = await import("three-globe");
 
-    // Renderer setup
-    const renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: true,
-    });
-    renderer.setSize(mountElement.clientWidth, mountElement.clientHeight);
-    renderer.setClearColor(0x000000, 0);
-    mountElement.appendChild(renderer.domElement);
+        // Scene setup with better lighting
+        scene = new THREE.Scene();
+        scene.fog = new THREE.Fog(0x000000, 400, 2000);
 
-    // Create dark Earth globe with realistic texture
-    const globe = new ThreeGlobeLib()
-      .globeImageUrl(
-        "//cdn.jsdelivr.net/npm/three-globe/example/img/earth-blue-marble.jpg"
-      )
-      .bumpImageUrl(
-        "//cdn.jsdelivr.net/npm/three-globe/example/img/earth-topology.png"
-      );
+        // Camera setup - positioned for better view
+        camera = new THREE.PerspectiveCamera(75, mountElement.clientWidth / mountElement.clientHeight, 0.1, 1000);
+        camera.position.set(0, 0, 250);
 
-    // Create a group for proper tilted rotation
-    const earthGroup = new THREE.Group();
+        // Renderer setup with better quality
+        renderer = new THREE.WebGLRenderer({
+          antialias: true,
+          alpha: true,
+          powerPreference: "high-performance"
+        });
+        renderer.setSize(mountElement.clientWidth, mountElement.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setClearColor(0x000000, 0);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        mountElement.appendChild(renderer.domElement);
 
-    // Add Earth's axial tilt to the group
-    earthGroup.rotation.z = (23.5 * Math.PI) / 180;
+        // Create realistic Earth globe using three-globe
+        globe = new ThreeGlobe.default()
+          .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+          .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png');
 
-    // Add globe to the tilted group instead of directly to scene
-    earthGroup.add(globe);
+        // Make globe bigger
+        globe.scale.set(1.2, 1.2, 1.2);
 
-    // Add the tilted group to scene
-    scene.add(earthGroup);
+        // Position globe to show Africa prominently
+        globe.rotation.x = -0.1;
+        globe.rotation.y = -0.3;
 
-    // Generate random points for visual interest
-    const pointsData = Array.from({ length: 150 }, () => ({
-      lat: (Math.random() - 0.5) * 180,
-      lng: (Math.random() - 0.5) * 360,
-      size: Math.random() * 0.4 + 0.2,
-      color: "#4a90e2",
-    }));
+        // African cities and major global cities for network connections
+        const cities = [
+          // African cities (highlighted)
+          { name: "Lagos", lat: 6.5244, lng: 3.3792, color: "#00ff88", size: 0.8 },
+          { name: "Cairo", lat: 30.0444, lng: 31.2357, color: "#00ff88", size: 0.7 },
+          { name: "Johannesburg", lat: -26.2041, lng: 28.0473, color: "#00ff88", size: 0.7 },
+          { name: "Nairobi", lat: -1.2921, lng: 36.8219, color: "#00ff88", size: 0.6 },
+          { name: "Accra", lat: 5.6037, lng: -0.1870, color: "#ffff00", size: 0.9 }, // Highlighted for ETH Accra
+          { name: "Casablanca", lat: 33.5731, lng: -7.5898, color: "#00ff88", size: 0.5 },
+          { name: "Addis Ababa", lat: 9.1450, lng: 40.4897, color: "#00ff88", size: 0.5 },
+          { name: "Dakar", lat: 14.7167, lng: -17.4677, color: "#00ff88", size: 0.4 },
 
-    globe
-      .pointsData(pointsData)
-      .pointColor("color")
-      .pointAltitude(0.03)
-      .pointRadius("size");
+          // Global cities for network connections
+          { name: "New York", lat: 40.7128, lng: -74.0060, color: "#4a90e2", size: 0.6 },
+          { name: "London", lat: 51.5074, lng: -0.1278, color: "#4a90e2", size: 0.6 },
+          { name: "Singapore", lat: 1.3521, lng: 103.8198, color: "#4a90e2", size: 0.5 },
+          { name: "Tokyo", lat: 35.6762, lng: 139.6503, color: "#4a90e2", size: 0.5 },
+          { name: "Dubai", lat: 25.2048, lng: 55.2708, color: "#4a90e2", size: 0.4 },
+        ];
 
-    // Generate arcs for connectivity visualization
-    const arcsData = Array.from({ length: 25 }, () => {
-      const start = pointsData[Math.floor(Math.random() * pointsData.length)];
-      const end = pointsData[Math.floor(Math.random() * pointsData.length)];
-      return {
-        startLat: start.lat,
-        startLng: start.lng,
-        endLat: end.lat,
-        endLng: end.lng,
-      };
-    });
+        // Add points to globe
+        globe.pointsData(cities)
+          .pointColor('color')
+          .pointAltitude(0.02)
+          .pointRadius('size')
+          .pointResolution(8);
 
-    globe
-      .arcsData(arcsData)
-      .arcColor(() => ["#164e63", "#4a90e2"])
-      .arcDashLength(0.6)
-      .arcDashGap(1.5)
-      .arcDashInitialGap(() => Math.random())
-      .arcDashAnimateTime(4000)
-      .arcStroke(0.3);
+        // Create network connections (arcs between cities)
+        const connections = [];
+        const africanCities = cities.slice(0, 8); // First 8 are African
+        const globalCities = cities.slice(8); // Rest are global
 
-    // Enhanced lighting for better visibility
-    const ambientLight = new THREE.AmbientLight(0x404040, 0.8);
-    scene.add(ambientLight);
+        // Connect African cities to each other
+        for (let i = 0; i < africanCities.length; i++) {
+          for (let j = i + 1; j < africanCities.length; j++) {
+            if (Math.random() > 0.6) { // 40% chance of connection
+              connections.push({
+                startLat: africanCities[i].lat,
+                startLng: africanCities[i].lng,
+                endLat: africanCities[j].lat,
+                endLng: africanCities[j].lng,
+                color: ['#00ff88', '#ffff00']
+              });
+            }
+          }
+        }
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
-    directionalLight.position.set(100, 100, 100);
-    scene.add(directionalLight);
+        // Connect African cities to global cities
+        africanCities.forEach(africanCity => {
+          globalCities.forEach(globalCity => {
+            if (Math.random() > 0.7) { // 30% chance of connection
+              connections.push({
+                startLat: africanCity.lat,
+                startLng: africanCity.lng,
+                endLat: globalCity.lat,
+                endLng: globalCity.lng,
+                color: ['#00ff88', '#4a90e2']
+              });
+            }
+          });
+        });
 
-    // Additional light from the opposite side to illuminate the dark side
-    const backLight = new THREE.DirectionalLight(0x164e63, 0.6);
-    backLight.position.set(-100, -50, -100);
-    scene.add(backLight);
+        // Add arcs to globe
+        globe.arcsData(connections)
+          .arcColor('color')
+          .arcDashLength(0.4)
+          .arcDashGap(2)
+          .arcDashInitialGap(() => Math.random() * 5)
+          .arcDashAnimateTime(2000)
+          .arcStroke(0.5);
 
-    // Animation loop
-    const animate = () => {
-      frameRef.current = requestAnimationFrame(animate);
+        scene.add(globe);
 
-      // Rotate the globe around its tilted axis (realistic Earth rotation)
-      if (globe && globe.rotation) {
-        globe.rotation.y += 0.002;
+        // Enhanced lighting for realistic appearance
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
+        directionalLight.position.set(100, 100, 50);
+        directionalLight.castShadow = true;
+        scene.add(directionalLight);
+
+        // Add rim lighting for atmosphere effect
+        const rimLight = new THREE.DirectionalLight(0x00aaff, 0.3);
+        rimLight.position.set(-100, -100, -50);
+        scene.add(rimLight);
+
+        // Animation loop with smooth rotation
+        const animate = () => {
+          animationId = requestAnimationFrame(animate);
+
+          // Rotate globe slowly to show different parts of Africa
+          if (globe) {
+            globe.rotation.y += 0.003;
+          }
+
+          renderer.render(scene, camera);
+        };
+
+        animate();
+        setIsLoading(false);
+
+      } catch (err) {
+        console.error("Globe error:", err);
+        setIsLoading(false);
       }
-
-      // Render
-      renderer.render(scene, camera);
     };
 
-    animate();
-
-    // Handle window resize
-    const handleResize = () => {
-      camera.aspect = mountElement.clientWidth / mountElement.clientHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(mountElement.clientWidth, mountElement.clientHeight);
-    };
-
-    if (typeof window !== "undefined") {
-      window.addEventListener("resize", handleResize);
-    }
+    initGlobe();
 
     // Cleanup
     return () => {
-      if (frameRef.current) {
-        cancelAnimationFrame(frameRef.current);
-      }
-      if (typeof window !== "undefined") {
-        window.removeEventListener("resize", handleResize);
-      }
-
-      if (mountElement && renderer.domElement) {
+      if (animationId) cancelAnimationFrame(animationId);
+      if (renderer && mountElement && renderer.domElement) {
         mountElement.removeChild(renderer.domElement);
+        renderer.dispose();
       }
-
-      // Dispose of Three.js objects
-      scene.clear();
-      renderer.dispose();
     };
   }, []);
 
   return (
-    <div
-      ref={mountRef}
-      className="w-full h-full pointer-events-none"
-      style={{
-        zIndex: 1,
-        opacity: 1,
-      }}
-    />
+    <div className="w-full h-full relative">
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-blue-900/20 to-cyan-900/20 rounded-lg">
+          <div className="text-center">
+            <div className="text-6xl mb-4 animate-pulse">🌍</div>
+            <p className="text-white/70">Loading Globe...</p>
+          </div>
+        </div>
+      )}
+      <div ref={mountRef} className="w-full h-full" style={{ minHeight: "300px" }} />
+    </div>
   );
 };

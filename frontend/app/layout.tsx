@@ -8,9 +8,9 @@ import "./globals.css";
 import Provider from "@/components/Provider";
 
 export const metadata: Metadata = {
-  title: "LatAmProof",
-  description: "Created with v0",
-  generator: "v0.app",
+  title: "AfricanProof - Web3 Identity for Africa",
+  description: "Complete Web3 identity and financial inclusion platform for Africa with ENS integration",
+  generator: "AfricanProof",
 };
 
 export default function RootLayout({

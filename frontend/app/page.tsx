@@ -1,22 +1,37 @@
 "use client";
 import dynamic from "next/dynamic";
+import { useState, useEffect } from "react";
+import { useAccount, useConnect, useDisconnect, useChainId, useSwitchChain } from "wagmi";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Shield, CheckCircle, Users, Zap } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Separator } from "@/components/ui/separator";
+import { ArrowRight, Shield, CheckCircle, Users, Zap, Wallet, Globe, CreditCard, AlertCircle, Loader2, ExternalLink, Smartphone, Banknote, Building, MapPin, Network } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
+import { useAfricanProof } from "@/hooks/useAfricanProof";
+import { SUPPORTED_COUNTRIES } from "@/lib/contracts";
 
-// Dynamically import the ThreeGlobeComponent to avoid SSR issues
-const ThreeGlobeComponent = dynamic(
+// Dynamically import the African Network Animation
+const AfricanNetworkAnimation = dynamic(
   () =>
-    import("@/components/three-globe-component").then(
-      (mod) => mod.ThreeGlobeComponent
+    import("@/components/AfricanNetworkAnimation").then(
+      (mod) => mod.AfricanNetworkAnimation
     ),
   {
     ssr: false,
     loading: () => (
-      <div className="w-full h-full bg-gradient-to-br from-sky-900/20 to-blue-900/20 rounded-lg animate-pulse" />
+      <div className="w-full h-full bg-gradient-to-br from-slate-900 via-green-900 to-slate-900 rounded-2xl animate-pulse flex items-center justify-center">
+        <div className="text-6xl animate-pulse">🌍</div>
+      </div>
     ),
   }
 );
+
+
 
 export default function HomePage() {
   return (
@@ -30,38 +45,49 @@ export default function HomePage() {
         <div className="flex flex-col justify-center max-w-xl lg:max-w-2xl">
           {/* Main Title */}
           <h1 className="text-4xl lg:text-6xl font-bold text-foreground mb-6 text-balance">
-            Verified Digital Identity for{" "}
-            <span className="text-cyan-400">Africa</span>
+            Empowering{" "}
+            <span className="text-green-400">African</span>{" "}
+            Communities with Trusted Identity
           </h1>
 
           {/* Subheadline */}
           <p className="text-xl text-muted-foreground mb-8 text-pretty leading-relaxed">
-            Bringing trust, fairness, and financial access to Africa through
-            ENS-powered, government-verified identities.
+            Revolutionizing financial inclusion, governance, and social impact across Africa through
+            blockchain-verified, government-backed digital identities.
           </p>
 
-          {/* CTA Button */}
-          <a href="/verify">
-            <div className="mb-8">
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 mb-8">
+            <a href="/africanproof">
               <Button
                 size="lg"
-                className="bg-white hover:bg-gray-100 text-black"
+                className="bg-green-500 hover:bg-green-600 text-white"
               >
-                Mint Your ENS ID
+                🌍 Start Your Journey
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </a>
+            <a href="/africanproof">
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-green-400 text-green-400 hover:bg-green-400 hover:text-black"
+              >
+                Explore Platform
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-            </div>
-          </a>
+            </a>
+          </div>
 
           <div className="lg:hidden w-full h-80">
-            <ThreeGlobeComponent />
+            <AfricanNetworkAnimation />
           </div>
         </div>
 
-        {/* Right Side - Globe (Desktop only, bigger size) */}
+        {/* Right Side - African Network Animation (Desktop only, bigger size) */}
         <div className="hidden lg:flex items-center justify-end w-full max-w-3xl">
           <div className="w-full h-[600px] lg:h-[700px] flex justify-end">
-            <ThreeGlobeComponent />
+            <AfricanNetworkAnimation />
           </div>
         </div>
       </div>
@@ -70,19 +96,17 @@ export default function HomePage() {
       <section className="relative z-10 py-16 lg:py-24 px-6 lg:px-12 bg-card/30">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-8">
-            The Challenge
+            The Reality Across Africa
           </h2>
           <p className="text-lg text-muted-foreground mb-6 text-pretty leading-relaxed">
-            Millions in Africa face challenges with fraud, duplicate identities,
-            and financial exclusion. Aid funds often don't reach those who need
-            them, remittances are costly and insecure, and communities struggle
-            with fair governance.
+            Over 400 million Africans lack formal identification, creating barriers to banking, healthcare, and education.
+            Cross-border remittances cost families up to 20% in fees, while fraudulent aid distribution leaves
+            vulnerable communities without essential resources.
           </p>
           <p className="text-lg text-foreground font-medium">
-            Our solution combines Self-Sovereign Identity with ENS domains to
-            create country-linked, sybil-resistant identities— open, reusable,
-            and trusted across financial, governance, and disaster relief
-            systems.
+            AfricanProof creates blockchain-verified, government-backed identities using ENS domains—
+            enabling secure financial services, transparent governance, and direct aid distribution
+            across all 54 African nations.
           </p>
         </div>
       </section>
@@ -91,42 +115,45 @@ export default function HomePage() {
       <section id="why" className="relative z-10 py-16 lg:py-24 px-6 lg:px-12">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-8 text-center">
-            Why Africa Needs This
+            Transforming African Communities
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-6">
               <div className="flex items-start space-x-3">
-                <Shield className="h-6 w-6 text-cyan-400 mt-1 flex-shrink-0" />
+                <Smartphone className="h-6 w-6 text-green-400 mt-1 flex-shrink-0" />
                 <p className="text-muted-foreground">
-                  Africa struggles with fraud, duplicate identities, and
-                  financial exclusion.
+                  Mobile-first identity solutions for Africa's 1.4 billion people,
+                  leveraging the continent's mobile penetration rate.
                 </p>
               </div>
               <div className="flex items-start space-x-3">
-                <Users className="h-6 w-6 text-cyan-400 mt-1 flex-shrink-0" />
+                <Banknote className="h-6 w-6 text-green-400 mt-1 flex-shrink-0" />
                 <p className="text-muted-foreground">
-                  Aid and disaster relief often fail to reach the right people.
+                  Reducing remittance costs from 20% to under 1% for the $100B
+                  sent to Africa annually.
                 </p>
               </div>
             </div>
             <div className="space-y-6">
               <div className="flex items-start space-x-3">
-                <CheckCircle className="h-6 w-6 text-cyan-400 mt-1 flex-shrink-0" />
+                <Building className="h-6 w-6 text-green-400 mt-1 flex-shrink-0" />
                 <p className="text-muted-foreground">
-                  Communities face sybil attacks in governance and funding.
+                  Enabling transparent governance and fair resource distribution
+                  across African institutions.
                 </p>
               </div>
               <div className="flex items-start space-x-3">
-                <Zap className="h-6 w-6 text-cyan-400 mt-1 flex-shrink-0" />
+                <MapPin className="h-6 w-6 text-green-400 mt-1 flex-shrink-0" />
                 <p className="text-muted-foreground">
-                  Millions remain unbanked, lacking formal credit histories.
+                  Connecting rural communities to global financial systems
+                  and opportunities.
                 </p>
               </div>
             </div>
           </div>
           <p className="text-center text-lg text-foreground mt-8 font-medium">
-            We're fixing this with a verified, reusable identity layer powered
-            by ENS.
+            AfricanProof bridges the digital divide with blockchain-verified identities
+            that unlock financial freedom and social empowerment.
           </p>
         </div>
       </section>
@@ -142,37 +169,37 @@ export default function HomePage() {
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-cyan-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-navy-900">1</span>
+              <div className="w-16 h-16 bg-green-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-slate-900">1</span>
               </div>
               <h3 className="text-xl font-semibold text-foreground mb-3">
-                Verify ID
+                Government Verification
               </h3>
               <p className="text-muted-foreground">
-                A citizen proves their identity via Self.
+                Citizens verify their identity through official government channels and biometric data.
               </p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-cyan-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-navy-900">2</span>
+              <div className="w-16 h-16 bg-green-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-slate-900">2</span>
               </div>
               <h3 className="text-xl font-semibold text-foreground mb-3">
-                Mint ENS Domain
+                Blockchain Identity
               </h3>
               <p className="text-muted-foreground">
-                They receive a country-linked ENS name (e.g., ana.ghana.eth).
+                Receive a country-linked ENS domain (e.g., kwame.gha.gwill.eth) with verified credentials.
               </p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-cyan-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-navy-900">3</span>
+              <div className="w-16 h-16 bg-green-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-slate-900">3</span>
               </div>
               <h3 className="text-xl font-semibold text-foreground mb-3">
-                Use Anywhere
+                Universal Access
               </h3>
               <p className="text-muted-foreground">
-                Smart contracts recognize this verified identity with our
-                sybil-resistant modifier.
+                Access banking, healthcare, education, and governance systems across Africa
+                with one trusted digital identity.
               </p>
             </div>
           </div>
@@ -186,39 +213,39 @@ export default function HomePage() {
       >
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-12 text-center">
-            Use Cases
+            Real-World Impact
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-card rounded-lg p-6">
+            <div className="bg-card rounded-lg p-6 border-l-4 border-green-400">
               <h3 className="text-xl font-semibold text-card-foreground mb-3">
-                Disaster Relief Funds
+                🏥 Healthcare Access
               </h3>
               <p className="text-muted-foreground">
-                Aid reaches only verified citizens.
+                Secure medical records and insurance verification across African healthcare systems.
               </p>
             </div>
-            <div className="bg-card rounded-lg p-6">
+            <div className="bg-card rounded-lg p-6 border-l-4 border-blue-400">
               <h3 className="text-xl font-semibold text-card-foreground mb-3">
-                Fair Governance
+                🌾 Agricultural Finance
               </h3>
               <p className="text-muted-foreground">
-                One person, one vote in DAOs and communities.
+                Farmers access microloans and crop insurance with verified land ownership and identity.
               </p>
             </div>
-            <div className="bg-card rounded-lg p-6">
+            <div className="bg-card rounded-lg p-6 border-l-4 border-purple-400">
               <h3 className="text-xl font-semibold text-card-foreground mb-3">
-                Cross-Border Remittances
+                💸 Diaspora Remittances
               </h3>
               <p className="text-muted-foreground">
-                Migrants send money home safely and directly.
+                African diaspora sends $100B+ annually home with instant, low-cost transfers.
               </p>
             </div>
-            <div className="bg-card rounded-lg p-6">
+            <div className="bg-card rounded-lg p-6 border-l-4 border-amber-400">
               <h3 className="text-xl font-semibold text-card-foreground mb-3">
-                Credit Access
+                🗳️ Democratic Participation
               </h3>
               <p className="text-muted-foreground">
-                Verified ENS activity helps build financial reputation.
+                Transparent elections and community governance with sybil-resistant voting.
               </p>
             </div>
           </div>

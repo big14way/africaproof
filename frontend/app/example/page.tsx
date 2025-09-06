@@ -21,7 +21,7 @@ import { client, walletClient } from "@/lib/client";
 import { useAccount } from "wagmi";
 import { Navbar } from "@/components/Navbar";
 
-export default function ReliefPage() {
+export default function CommunityFundPage() {
   const [isEligible, setIsEligible] = useState(false);
   const [hasClaimed, setHasClaimed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -178,9 +178,9 @@ export default function ReliefPage() {
       <div className="max-w-3xl mx-auto p-6 lg:p-12 space-y-8">
         {/* Header */}
         <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold text-white">Relief Fund Claim</h1>
+          <h1 className="text-4xl font-bold text-white">Community Development Fund</h1>
           <p className="text-lg text-gray-400">
-            Emergency financial assistance for verified Argentina citizens
+            Empowering verified African citizens with direct financial support
           </p>
         </div>
 
@@ -188,47 +188,62 @@ export default function ReliefPage() {
         <Card className="bg-gray-900 border-gray-800">
           <CardHeader>
             <CardTitle className="text-xl text-white flex items-center">
-              <Shield className="mr-2 h-5 w-5 text-sky-400" />
-              Eligibility Requirements
+              <Shield className="mr-2 h-5 w-5 text-green-400" />
+              Community Fund Eligibility
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-center space-x-3">
-                <MapPin className="h-5 w-5 text-sky-400" />
+                <MapPin className="h-5 w-5 text-green-400" />
                 <div>
                   <p className="font-medium text-white">
-                    Argentina Citizenship
+                    🌍 African Identity
                   </p>
                   <p className="text-sm text-gray-400">
-                    Verified through LatAm Proof
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Users className="h-5 w-5 text-sky-400" />
-                <div>
-                  <p className="font-medium text-white">One Claim Per Person</p>
-                  <p className="text-sm text-gray-400">
-                    Sybil-resistant verification
+                    Government-verified citizenship
                   </p>
                 </div>
               </div>
               <div className="flex items-center space-x-3">
-                <Calendar className="h-5 w-5 text-sky-400" />
+                <Users className="h-5 w-5 text-green-400" />
                 <div>
-                  <p className="font-medium text-white">Active Program</p>
+                  <p className="font-medium text-white">🔐 Unique Verification</p>
                   <p className="text-sm text-gray-400">
-                    Claims available until exhausted
+                    One claim per verified person
                   </p>
                 </div>
               </div>
               <div className="flex items-center space-x-3">
-                <Shield className="h-5 w-5 text-sky-400" />
+                <Calendar className="h-5 w-5 text-green-400" />
                 <div>
-                  <p className="font-medium text-white">ENS Domain Required</p>
+                  <p className="font-medium text-white">🏷️ ENS Domain</p>
                   <p className="text-sm text-gray-400">
-                    Government-verified identity
+                    Country-linked identity (e.g., kwame.gha.gwill.eth)
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Shield className="h-5 w-5 text-green-400" />
+                <div>
+                  <p className="font-medium text-white">⚡ Active Program</p>
+                  <p className="text-sm text-gray-400">
+                    Funds available for community development
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Community Impact Info */}
+            <div className="mt-6 p-4 bg-green-900/20 border border-green-500/30 rounded-lg">
+              <div className="flex items-start gap-3">
+                <div className="text-green-400 text-lg">💡</div>
+                <div>
+                  <h4 className="text-green-300 font-medium mb-1">Community Impact</h4>
+                  <p className="text-sm text-gray-300">
+                    These funds support agricultural development, education initiatives,
+                    and healthcare access across African communities. Each verified citizen
+                    can claim once to ensure fair distribution.
                   </p>
                 </div>
               </div>
@@ -250,7 +265,7 @@ export default function ReliefPage() {
                   <p className="text-3xl font-bold text-sky-400">
                     {Number(programData.amount) / 10 ** 18}
                   </p>
-                  <p className="text-sm text-gray-400">RELIEF Tokens</p>
+                  <p className="text-sm text-gray-400">ASANTE Tokens</p>
                 </div>
                 <div className="text-center">
                   <p className="text-3xl font-bold text-white">
@@ -293,7 +308,7 @@ export default function ReliefPage() {
                 <CheckCircle className="h-6 w-6 text-green-400" />
                 <div>
                   <p className="font-semibold text-green-200">
-                    Eligible for Relief
+                    Eligible for Community Fund
                   </p>
                   <p className="text-sm text-green-400">
                     Address: {address?.slice(0, 6)}...{address?.slice(-4)}
@@ -328,7 +343,7 @@ export default function ReliefPage() {
                     Already Claimed!
                   </h3>
                   <p className="text-gray-400">
-                    You have already received your relief funds
+                    You have already received your community development funds
                   </p>
                   {txHash && (
                     <div className="mt-4 space-y-2">
@@ -356,7 +371,7 @@ export default function ReliefPage() {
                     Ready to Claim
                   </h3>
                   <p className="text-gray-400">
-                    One-time relief fund for verified citizens
+                    One-time community development fund for verified African citizens
                   </p>
                 </div>
 
@@ -382,7 +397,7 @@ export default function ReliefPage() {
                       <DollarSign className="mr-2 h-4 w-4" />
                       Claim{" "}
                       {programData
-                        ? `${Number(programData.amount) / 10 ** 18} RELIEF`
+                        ? `${Number(programData.amount) / 10 ** 18} ASANTE`
                         : "Loading..."}
                     </>
                   )}

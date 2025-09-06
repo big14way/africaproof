@@ -1,24 +1,54 @@
 "use client";
 
 import "@rainbow-me/rainbowkit/styles.css";
-import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import {
+  getDefaultConfig,
+  RainbowKitProvider,
+  darkTheme
+} from "@rainbow-me/rainbowkit";
 import { WagmiProvider } from "wagmi";
-import { celoAlfajores } from "wagmi/chains";
+import { baseSepolia, sepolia, mainnet } from "wagmi/chains";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { ReactNode, useMemo } from "react";
 
+// RainbowKit configuration with proper ENS support
 const config = getDefaultConfig({
-  appName: "LatAmProof",
-  projectId: process.env.NEXT_PUBLIC_PROJECT_ID || "",
-  chains: [celoAlfajores],
-  ssr: true, // If your dApp uses server side rendering (SSR)
+  appName: "AfricanProof",
+  projectId: "demo-project-id", // Use demo ID to avoid 403 errors
+  chains: [baseSepolia, sepolia, mainnet],
+  ssr: false,
 });
 
-export default function Provider({ children }: { children: React.ReactNode }) {
-  const queryClient = new QueryClient();
+// Create QueryClient outside component to prevent re-initialization
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      gcTime: 1000 * 60 * 10, // 10 minutes
+    },
+  },
+});
+
+export default function Provider({ children }: { children: ReactNode }) {
+  // Memoize theme to prevent re-creation on every render
+  const theme = useMemo(() => darkTheme({
+    accentColor: '#10b981', // Green-500
+    accentColorForeground: 'white',
+    borderRadius: 'medium',
+    fontStack: 'system',
+    overlayBlur: 'small',
+  }), []);
+
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider>{children}</RainbowKitProvider>
+        <RainbowKitProvider
+          theme={theme}
+          showRecentTransactions={true}
+          coolMode={false} // Disable cool mode for better performance
+        >
+          {children}
+        </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );
