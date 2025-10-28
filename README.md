@@ -229,6 +229,68 @@ npx hardhat run scripts/deployProduction.js --network base
 - Country management
 - Simple ENS integration
 
+## 🔌 Wallet Integration (Enhanced)
+
+AfricanProof now features **Reown AppKit** for seamless wallet connectivity, making financial inclusion more accessible across Africa.
+
+### Why Reown AppKit?
+
+- **Professional UI**: Clean, intuitive wallet connection experience
+- **300+ Wallet Support**: Works with MetaMask, Trust Wallet, Coinbase Wallet, Rainbow, and more
+- **Email Login**: Critical feature for users new to crypto - onboard with just an email
+- **Account Management**: Built-in balance display, network switcher, and transaction history
+- **Mobile First**: QR code scanning and deep linking optimized for mobile users
+- **Multi-Language Support**: Helps reach diverse African communities
+- **Low Bandwidth Optimization**: Works efficiently even with limited internet connectivity
+
+### Benefits for Financial Inclusion
+
+- **Lower Barriers to Entry**: Email login removes the complexity of seed phrases for new users
+- **Better User Experience**: Professional UI builds trust with users unfamiliar with Web3
+- **Mobile Accessibility**: Most African users access internet via mobile - AppKit is mobile-optimized
+- **Multiple Wallet Options**: Users can choose wallets popular in their region
+
+### Configuration
+
+Reown AppKit packages used:
+
+```json
+{
+  "@reown/appkit": "^1.8.12",
+  "@reown/appkit-adapter-wagmi": "^1.8.12"
+}
+```
+
+**WalletConnect Project ID**: `1eebe528ca0ce94a99ceaa2e915058d7`
+
+### Implementation Details
+
+The AppKit configuration is located in `frontend/src/config/appkit.ts` and includes:
+
+- Base Sepolia testnet support (with mainnet ready)
+- ENS integration for identity verification
+- Optimized for micro-payments and remittances
+- Custom branding for AfricanProof
+
+### Quick Usage Example
+
+```typescript
+import { useAccount } from 'wagmi'
+import { useAppKit } from '@reown/appkit/react'
+
+// Connect and verify
+const { address, isConnected } = useAccount()
+const { open } = useAppKit()
+
+// Open wallet connection modal
+<button onClick={() => open()}>Connect Wallet</button>
+
+// Pre-built button component
+<appkit-button />
+```
+
+The enhanced wallet integration is crucial for AfricanProof's mission of financial inclusion, making it easier for first-time crypto users to access identity verification and financial services.
+
 ### Key Features
 
 #### 🏷️ Advanced ENS Integration
